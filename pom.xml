@@ -91,6 +91,15 @@
                 <updatePolicy>daily</updatePolicy>
             </snapshots>
         </repository>
+        <!-- hexosse repository -->
+        <repository>
+            <id>hexosse-repo</id>
+            <url>https://raw.github.com/hexosse/maven-repo/master/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
         <!-- Metrics -->
         <repository>
             <id>Plugin Metrics</id>
@@ -354,6 +363,8 @@
                     <repositoryName>maven-repo</repositoryName>
                     <!-- github username -->
                     <repositoryOwner>hexosse</repositoryOwner>
+                    <!-- github OAuth Token -->
+                    <oauth2Token>${env.GITHUB_OAUTH_TOKEN}</oauth2Token>
                 </configuration>
                 <executions>
                     <execution>
