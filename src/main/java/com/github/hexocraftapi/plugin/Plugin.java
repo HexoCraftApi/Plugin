@@ -16,10 +16,11 @@ package com.github.hexocraftapi.plugin;
  * limitations under the License.
  */
 
+import com.github.hexocraftapi.api.Metrics;
 import com.github.hexocraftapi.command.Command;
 import com.github.hexocraftapi.command.CommandRegistration;
 import com.github.hexocraftapi.message.predifined.message.EmptyMessage;
-import com.github.hexocraftapi.message.predifined.message.ErrorMessage;
+import com.github.hexocraftapi.message.predifined.message.ErrorPluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginStraightMessage;
 import com.github.hexocraftapi.updater.updater.Downloader;
@@ -28,9 +29,13 @@ import com.github.hexocraftapi.updater.updater.Updater;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.IllegalPluginAccessException;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.IOException;
+import java.net.URLEncoder;
 
 /**
  * @author <b>Hexosse</b> (<a href="https://github.com/hexosse">on GitHub</a>))
@@ -38,7 +43,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 public abstract class Plugin extends JavaPlugin
 {
 
-
+	/**
+	 * Use registerEvents to register any class implementing Listener
+	 *
+	 * @param listener The Listener to register
+	 */
 	public void registerEvents(Listener listener)
 	{
 		if(!this.isEnabled())
@@ -47,6 +56,13 @@ public abstract class Plugin extends JavaPlugin
 		this.getServer().getPluginManager().registerEvents(listener, this);
 	}
 
+	/**
+	 * Use registerCommands to register any class implementing Command
+	 *
+	 * With this method, no need to declare your command in plugin.yml
+	 *
+	 * @param command The Command to register
+	 */
 	public void registerCommands(Command command)
 	{
 		if(!this.isEnabled())
@@ -55,14 +71,24 @@ public abstract class Plugin extends JavaPlugin
 		CommandRegistration.registerCommand(this, command);
 	}
 
+	/**
+	 * With this method, you can automatically run a GitHubUpdater, BukkitUpdater or SpigotUpdater
+	 *
+	 * @param updater An updater. Can be GitHubUpdater, BukkitUpdater or SpigotUpdater.
+	 * @param sender The sender asking to run the updater.
+	 * @param delay The delay before launching the updater.
+	 */
 	public void runUpdater(final Updater updater, final CommandSender sender, int delay)
 	{
 		final JavaPlugin plugin = this;
 
-		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable() {
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable()
+		{
 			@Override
-			public void run() {
-				try {
+			public void run()
+			{
+				try
+				{
 					Response response = updater.getResult();
 					if(response == Response.SUCCESS)
 					{
@@ -86,22 +112,60 @@ public abstract class Plugin extends JavaPlugin
 						PluginStraightMessage.toSender(sender, plugin, ChatColor.AQUA);
 						EmptyMessage.toSender(sender);
 					}
-					else if(response == Response.NO_UPDATE)
+					else if(!(sender instanceof Player))
 					{
-						PluginMessage.toSender(sender, plugin, "You are running the latest version;", ChatColor.GREEN);
-					}
-					else if(response == Response.ERROR_TIME_OUT)
-					{
-						ErrorMessage.toSender(sender, "Time out will trying to find an update to " + plugin.getDescription().getName());
-					}
-					else
-					{
-						ErrorMessage.toSender(sender, "an error occured will trying to find an update to " + plugin.getDescription().getName());
+						if(response == Response.NO_UPDATE)
+						{
+							PluginMessage.toSender(sender, plugin, "You are running the latest version;", ChatColor.GREEN);
+						}
+						else if(response == Response.ERROR_TIME_OUT)
+						{
+							ErrorPluginMessage.toSender(sender, plugin, "Time out will trying to find an update to " + plugin.getDescription().getName());
+						}
+						else
+						{
+							ErrorPluginMessage.toSender(sender, plugin, "An error occurred will trying to find an update to " + plugin.getDescription().getName());
+						}
 					}
 				}
 				catch(Exception e)
 				{
 					e.printStackTrace();
+				}
+			}
+		}, delay);
+	}
+
+
+	/**
+	 * This method automatically start Metrics after a delay.
+	 *
+	 * @param delay The delay before launching the updater.
+	 */
+	public void RunMetrics(int delay)
+	{
+		final JavaPlugin plugin = this;
+
+		Bukkit.getScheduler().runTaskLaterAsynchronously(this, new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				CommandSender sender = Bukkit.getServer().getConsoleSender();
+				try
+				{
+					Metrics metrics = new Metrics(plugin);
+					if(metrics.start())
+					{
+						PluginMessage.toSender(sender, plugin, "Successfully started Metrics", ChatColor.GREEN);
+						PluginMessage.toSender(sender, plugin, "See http://mcstats.org/" + URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"), ChatColor.GREEN);
+					}
+					else
+						ErrorPluginMessage.toSender(sender, plugin, "An error occurred will trying to start Metrics.");
+				}
+				catch(IOException e)
+				{
+					ErrorPluginMessage.toSender(sender, plugin, "An error occurred will trying to submit stats to Metrics.");
 				}
 			}
 		}, delay);
