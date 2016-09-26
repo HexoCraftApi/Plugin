@@ -116,7 +116,7 @@ public abstract class Plugin extends JavaPlugin
 					{
 						if(response == Response.NO_UPDATE)
 						{
-							PluginMessage.toSender(sender, plugin, "You are running the latest version;", ChatColor.GREEN);
+							PluginMessage.toSender(sender, plugin, "You are running the latest version.", ChatColor.GREEN);
 						}
 						else if(response == Response.ERROR_TIME_OUT)
 						{
