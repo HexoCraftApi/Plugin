@@ -169,6 +169,10 @@
                     <groupId>com.github.hexocraftapi</groupId>
                     <artifactId>message</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.github.hexocraftapi</groupId>
+                    <artifactId>sounds</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- hexosse Sounds -->
