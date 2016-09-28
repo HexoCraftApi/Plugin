@@ -195,6 +195,10 @@
                     <groupId>com.github.hexocraftapi</groupId>
                     <artifactId>reflection</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.github.hexocraftapi</groupId>
+                    <artifactId>sounds</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- hexosse Updater -->
