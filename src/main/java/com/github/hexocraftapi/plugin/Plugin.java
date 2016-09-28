@@ -16,7 +16,7 @@ package com.github.hexocraftapi.plugin;
  * limitations under the License.
  */
 
-import com.github.hexocraftapi.api.Metrics;
+import com.github.hexocraftapi.metrics.Metrics;
 import com.github.hexocraftapi.command.Command;
 import com.github.hexocraftapi.command.CommandRegistration;
 import com.github.hexocraftapi.message.predifined.message.EmptyMessage;
