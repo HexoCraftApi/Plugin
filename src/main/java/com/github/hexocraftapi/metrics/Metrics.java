@@ -1,5 +1,6 @@
 package com.github.hexocraftapi.metrics;
 
+import com.github.hexocraftapi.util.PlayerUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -293,20 +294,7 @@ public class Metrics {
      * @return online player amount
      */
     private int getOnlinePlayers() {
-        try {
-            Method onlinePlayerMethod = Server.class.getMethod("getOnlinePlayers");
-            if(onlinePlayerMethod.getReturnType().equals(Collection.class)) {
-                return ((Collection<?>)onlinePlayerMethod.invoke(Bukkit.getServer())).size();
-            } else {
-                return ((Player[])onlinePlayerMethod.invoke(Bukkit.getServer())).length;
-            }
-        } catch (Exception ex) {
-            if (debug) {
-                Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
-            }
-        }
-        
-        return 0;
+        return PlayerUtil.getOnlinePlayers().size();
     }
 
     /**
