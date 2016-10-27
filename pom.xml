@@ -230,6 +230,13 @@
             <version>[1.0.0, )</version>
             <scope>compile</scope>
         </dependency>
+        <!-- hexosse WeightedSelector -->
+        <dependency>
+            <groupId>com.github.hexocraftapi</groupId>
+            <artifactId>weighted-selector</artifactId>
+            <version>[1.0.0, )</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 
