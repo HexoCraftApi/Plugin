@@ -16,13 +16,13 @@ package com.github.hexocraftapi.plugin;
  * limitations under the License.
  */
 
-import com.github.hexocraftapi.metrics.Metrics;
 import com.github.hexocraftapi.command.Command;
 import com.github.hexocraftapi.command.CommandRegistration;
 import com.github.hexocraftapi.message.predifined.message.EmptyMessage;
 import com.github.hexocraftapi.message.predifined.message.ErrorPluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginStraightMessage;
+import com.github.hexocraftapi.metrics.Metrics;
 import com.github.hexocraftapi.updater.updater.Downloader;
 import com.github.hexocraftapi.updater.updater.Response;
 import com.github.hexocraftapi.updater.updater.Updater;
