@@ -263,6 +263,10 @@
                     <groupId>com.github.hexocraftapi</groupId>
                     <artifactId>sounds</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.github.hexocraftapi</groupId>
+                    <artifactId>checkargs</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- hexosse Updater -->
