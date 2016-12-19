@@ -92,6 +92,10 @@ public abstract class Plugin extends JavaPlugin
 					Response response = updater.getResult();
 					if(response == Response.SUCCESS)
 					{
+						boolean downloaded = false;
+						Downloader downloader = new Downloader(updater.getUpdate());
+						if(downloader.download()) downloaded = true;
+
 						EmptyMessage.toSender(sender);
 						PluginStraightMessage.toSender(sender, plugin, ChatColor.AQUA);
 						PluginMessage.toSender(sender, plugin, "");
@@ -104,8 +108,7 @@ public abstract class Plugin extends JavaPlugin
 							PluginMessage.toSender(sender, plugin, "");
 						}
 
-						Downloader downloader = new Downloader(updater.getUpdate());
-						if(downloader.download())
+						if(downloaded)
 							PluginMessage.toSender(sender, plugin, "Update downloaded into plugins\\Updater ");
 
 						PluginMessage.toSender(sender, plugin, "");
