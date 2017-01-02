@@ -139,7 +139,6 @@ public abstract class Plugin extends JavaPlugin
 		}, delay);
 	}
 
-
 	/**
 	 * This method automatically start Metrics after a delay.
 	 *
