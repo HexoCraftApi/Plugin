@@ -22,7 +22,7 @@ import com.github.hexocraftapi.message.predifined.message.EmptyMessage;
 import com.github.hexocraftapi.message.predifined.message.ErrorPluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginMessage;
 import com.github.hexocraftapi.message.predifined.message.PluginStraightMessage;
-import com.github.hexocraftapi.metrics.Metrics;
+import com.github.hexocraftapi.metrics.BStatsMetrics;
 import com.github.hexocraftapi.updater.updater.Downloader;
 import com.github.hexocraftapi.updater.updater.Response;
 import com.github.hexocraftapi.updater.updater.Updater;
@@ -156,14 +156,10 @@ public abstract class Plugin extends JavaPlugin
 				CommandSender sender = Bukkit.getServer().getConsoleSender();
 				try
 				{
-					Metrics metrics = new Metrics(plugin);
-					if(metrics.start())
-					{
-						PluginMessage.toSender(sender, plugin, "Successfully started Metrics", ChatColor.GREEN);
-						PluginMessage.toSender(sender, plugin, "See http://mcstats.org/" + URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"), ChatColor.GREEN);
-					}
-					else
-						ErrorPluginMessage.toSender(sender, plugin, "An error occurred will trying to start Metrics.");
+					BStatsMetrics metrics = new BStatsMetrics(plugin);
+
+					PluginMessage.toSender(sender, plugin, "Successfully started Metrics", ChatColor.GREEN);
+					PluginMessage.toSender(sender, plugin, "See http://mcstats.org/" + URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"), ChatColor.GREEN);
 				}
 				catch(IOException e)
 				{
