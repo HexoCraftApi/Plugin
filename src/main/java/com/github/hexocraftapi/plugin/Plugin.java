@@ -159,7 +159,7 @@ public abstract class Plugin extends JavaPlugin
 					BStatsMetrics metrics = new BStatsMetrics(plugin);
 
 					PluginMessage.toSender(sender, plugin, "Successfully started Metrics", ChatColor.GREEN);
-					PluginMessage.toSender(sender, plugin, "See http://mcstats.org/" + URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"), ChatColor.GREEN);
+					PluginMessage.toSender(sender, plugin, "See http://bstats.org/plugin/bukkit/" + URLEncoder.encode(plugin.getDescription().getName(), "UTF-8"), ChatColor.GREEN);
 				}
 				catch(IOException e)
 				{
