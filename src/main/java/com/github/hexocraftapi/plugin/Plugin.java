@@ -78,7 +78,7 @@ public abstract class Plugin extends JavaPlugin
 	 * @param sender The sender asking to run the updater.
 	 * @param delay The delay before launching the updater.
 	 */
-	public void runUpdater(final Updater updater, final CommandSender sender, int delay)
+	public void runUpdater(final Updater updater, final CommandSender sender, final boolean downloadUpdate, int delay)
 	{
 		final JavaPlugin plugin = this;
 
@@ -94,7 +94,7 @@ public abstract class Plugin extends JavaPlugin
 					{
 						boolean downloaded = false;
 						Downloader downloader = new Downloader(updater.getUpdate());
-						if(downloader.download()) downloaded = true;
+						if(downloadUpdate && downloader.download()) downloaded = true;
 
 						EmptyMessage.toSender(sender);
 						PluginStraightMessage.toSender(sender, plugin, ChatColor.AQUA);
